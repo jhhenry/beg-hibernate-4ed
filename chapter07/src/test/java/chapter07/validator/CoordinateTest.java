@@ -1,15 +1,22 @@
 package chapter07.validator;
 
-import chapter07.validated.Coordinate;
-import com.autumncode.hibernate.util.SessionUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.util.stream.Stream;
 
 import javax.validation.ConstraintViolationException;
 
-import static org.testng.Assert.fail;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import com.autumncode.hibernate.util.SessionUtil;
+
+import chapter07.validated.Coordinate;
 
 public class CoordinateTest {
     private Coordinate persist(Coordinate entity) {
@@ -21,26 +28,30 @@ public class CoordinateTest {
         return entity;
     }
 
-    @DataProvider(name = "validCoordinates")
-    private Object[][] validCoordinates() {
-        return new Object[][]{
-                {1, 1},
-                {-1, 1},
-                {1, -1},
-                {0, 0},
-        };
+    
+    static Stream<Arguments> validCoordinates() {
+    	return Stream.of(
+    			Arguments.of(1, 1),
+    			Arguments.of(-1, 1),
+    			Arguments.of(1, -1),
+    			Arguments.of(0, 0)
+    			);
     }
 
-    @Test(dataProvider = "validCoordinates")
+    @ParameterizedTest
+    @MethodSource("validCoordinates")
     public void testValidCoordinate(Integer x, Integer y) {
         Coordinate c = Coordinate.builder().x(x).y(y).build();
         persist(c);
         // has passed validation, if we reach this point.
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test
     public void testInvalidCoordinate() {
-        testValidCoordinate(-1, -1);
-        fail("Should have gotten a constraint violation");
+        assertThrows(ConstraintViolationException.class, () -> {
+        	testValidCoordinate(-1, -1);
+        	 fail("Should have gotten a constraint violation");
+        });
+       
     }
 }

@@ -1,14 +1,17 @@
 package chapter07.lifecycle;
 
-import com.autumncode.jpa.util.JPASessionUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.testng.Reporter;
-import org.testng.annotations.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
-import static org.testng.Assert.*;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.junit.jupiter.api.Test;
+
+import com.autumncode.jpa.util.JPASessionUtil;
 
 public class LifecycleTest {
     @Test
@@ -33,7 +36,7 @@ public class LifecycleTest {
                     .load(-1);
             assertNull(thing2);
 
-            Reporter.log("attempted to load nonexistent reference");
+            //Reporter.log("attempted to load nonexistent reference");
 
             thing2 = session.byId(LifecycleThing.class)
                     .getReference(id);
@@ -125,27 +128,29 @@ public class LifecycleTest {
         }
     }
 
-    @Test(expectedExceptions = RuntimeException.class, expectedExceptionsMessageRegExp = "postload failure")
+    @Test
     public void testPostLoad() {
-        Integer id;
-        Session session = JPASessionUtil.getSession("chapter07");
-        Transaction tx = session.beginTransaction();
+    	assertThrows(RuntimeException.class, () -> {
+    		Integer id;
+    		Session session = JPASessionUtil.getSession("chapter07");
+    		Transaction tx = session.beginTransaction();
 
-        FailingEntity failingEntity = new FailingEntity();
-        failingEntity.setValue("postload");
-        failingEntity.setFailureStatus(FailingEntity.FailureStatus.POSTLOAD);
+    		FailingEntity failingEntity = new FailingEntity();
+    		failingEntity.setValue("postload");
+    		failingEntity.setFailureStatus(FailingEntity.FailureStatus.POSTLOAD);
 
-        session.persist(failingEntity);
-        tx.commit();
-        session.close();
+    		session.persist(failingEntity);
+    		tx.commit();
+    		session.close();
 
-        session = JPASessionUtil.getSession("chapter07");
-        tx = session.beginTransaction();
-        FailingEntity e = session
-                .byId(FailingEntity.class)
-                .load(failingEntity.getId());
-        System.out.println(e);
-        tx.commit();
-        session.close();
+    		session = JPASessionUtil.getSession("chapter07");
+    		tx = session.beginTransaction();
+    		FailingEntity e = session
+    				.byId(FailingEntity.class)
+    				.load(failingEntity.getId());
+    		System.out.println(e);
+    		tx.commit();
+    		session.close();
+    	});
     }
 }

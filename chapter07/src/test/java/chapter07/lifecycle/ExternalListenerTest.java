@@ -1,15 +1,16 @@
 package chapter07.lifecycle;
 
-import com.autumncode.jpa.util.JPASessionUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.testng.annotations.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Date;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.junit.jupiter.api.Test;
+
+import com.autumncode.jpa.util.JPASessionUtil;
 
 public class ExternalListenerTest {
     @Test

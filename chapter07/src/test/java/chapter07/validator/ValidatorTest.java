@@ -1,20 +1,23 @@
 package chapter07.validator;
 
-import chapter07.unvalidated.UnvalidatedSimplePerson;
-import chapter07.validated.ValidatedSimplePerson;
-import com.autumncode.hibernate.util.SessionUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.testng.annotations.Test;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import javax.validation.ConstraintViolationException;
 
-import static org.testng.Assert.fail;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.junit.jupiter.api.Test;
+
+import com.autumncode.hibernate.util.SessionUtil;
+
+import chapter07.unvalidated.UnvalidatedSimplePerson;
+import chapter07.validated.ValidatedSimplePerson;
 
 public class ValidatorTest {
     @Test
     public void createUnvalidatedUnderagePerson() {
-        Long id = null;
+        //Long id = null;
         try (Session session = SessionUtil.getSession()) {
             Transaction transaction = session.beginTransaction();
 
@@ -24,7 +27,7 @@ public class ValidatorTest {
             person.setLname("McYoungster");
 
             session.persist(person);
-            id = person.getId();
+            //id = person.getId();
             transaction.commit();
         }
     }
@@ -37,30 +40,37 @@ public class ValidatorTest {
                 .lname("McYoungster").build());
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test
     public void createValidatedUnderagePerson() {
-        persist(ValidatedSimplePerson.builder()
-                .age(12)
-                .fname("Johnny")
-                .lname("McYoungster").build());
-        fail("Should have failed validation");
+    	assertThrows(ConstraintViolationException.class, () -> {
+    		persist(ValidatedSimplePerson.builder()
+    				.age(12)
+    				.fname("Johnny")
+    				.lname("McYoungster").build());
+    		fail("Should have failed validation");
+    	});
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test
     public void createValidatedPoorFNamePerson2() {
-        persist(ValidatedSimplePerson.builder()
-                .age(14)
-                .fname("J")
-                .lname("McYoungster2").build());
-        fail("Should have failed validation");
+    	assertThrows(ConstraintViolationException.class, () -> {
+    		persist(ValidatedSimplePerson.builder()
+    				.age(14)
+    				.fname("J")
+    				.lname("McYoungster2").build());
+    		fail("Should have failed validation");
+    	});
     }
 
-    @Test(expectedExceptions = ConstraintViolationException.class)
+    @Test
     public void createValidatedNoFNamePerson() {
-        persist(ValidatedSimplePerson.builder()
-                .age(14)
-                .lname("McYoungster2").build());
-        fail("Should have failed validation");
+    	assertThrows(ConstraintViolationException.class, () -> {
+    		persist(ValidatedSimplePerson.builder()
+    				.age(14)
+    				.lname("McYoungster2").build());
+    		fail("Should have failed validation");
+    	}
+    			);
     }
 
     private ValidatedSimplePerson persist(ValidatedSimplePerson person) {
