@@ -2,6 +2,8 @@ package chapter06.naturalid;
 
 import org.hibernate.annotations.NaturalId;
 
+import java.util.Objects;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

@@ -1,10 +1,11 @@
 package chapter03.application;
 
-import chapter03.hibernate.Person;
-import org.testng.annotations.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNull;
+import org.junit.jupiter.api.Test;
+
+import chapter03.hibernate.Person;
 
 public class FindBestRankingTest {
     RankingService service = new HibernateRankingService();

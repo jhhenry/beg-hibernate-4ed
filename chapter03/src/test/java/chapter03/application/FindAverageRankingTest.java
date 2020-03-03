@@ -1,8 +1,8 @@
 package chapter03.application;
 
-import org.testng.annotations.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import static org.testng.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
 
 public class FindAverageRankingTest {
     RankingService service = new HibernateRankingService();

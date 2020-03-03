@@ -1,15 +1,17 @@
 package chapter08;
 
-import chapter08.model.Supplier;
-import com.autumncode.hibernate.util.SessionUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.autumncode.hibernate.util.SessionUtil;
+
+import chapter08.model.Supplier;
 
 public class QueryTest {
-    @BeforeMethod
+    @BeforeEach
     public void populateData() {
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();
@@ -24,7 +26,7 @@ public class QueryTest {
         session.close();
     }
 
-    @AfterMethod
+    @AfterEach
     public void closeSession() {
         Session session = SessionUtil.getSession();
         Transaction tx = session.beginTransaction();

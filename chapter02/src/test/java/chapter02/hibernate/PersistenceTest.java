@@ -1,22 +1,20 @@
 package chapter02.hibernate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
-
-import java.util.List;
-
-import static org.testng.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
 
 public class PersistenceTest {
     SessionFactory factory;
 
-    @BeforeSuite
     public void setup() {
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure()
@@ -34,7 +32,7 @@ public class PersistenceTest {
         }
     }
 
-    @Test(dependsOnMethods = "saveMessage")
+    @Test
     public void readMessage() {
         try (Session session = factory.openSession()) {
             List<Message> list = session.createQuery("from Message", Message.class).list();

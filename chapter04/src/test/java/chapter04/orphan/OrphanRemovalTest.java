@@ -1,14 +1,15 @@
 package chapter04.orphan;
 
-import com.autumncode.hibernate.util.SessionUtil;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import org.testng.annotations.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.junit.jupiter.api.Test;
+
+import com.autumncode.hibernate.util.SessionUtil;
 
 public class OrphanRemovalTest {
     @Test

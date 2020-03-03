@@ -1,11 +1,13 @@
 package chapter04.id;
 
-import com.autumncode.hibernate.util.SessionUtil;
+import javax.persistence.PersistenceException;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-import javax.persistence.PersistenceException;
+import com.autumncode.hibernate.util.SessionUtil;
 
 public class IdentityTest {
     @Test
@@ -23,19 +25,21 @@ public class IdentityTest {
         System.out.println(obj.getId());
     }
 
-    @Test(expectedExceptions = PersistenceException.class)
+    @Test
     public void testNongeneratedIdentityFailure() {
-        Session session = SessionUtil.getSession();
-        Transaction tx = session.beginTransaction();
+        Assertions.assertThrows(PersistenceException.class, () -> {
+        	Session session = SessionUtil.getSession();
+            Transaction tx = session.beginTransaction();
 
-        NongeneratedIdentity obj = new NongeneratedIdentity();
+            NongeneratedIdentity obj = new NongeneratedIdentity();
 
-        session.persist(obj);
+            session.persist(obj);
 
-        tx.commit();
-        session.close();
-
-        System.out.println(obj.getId());
+            tx.commit();
+            session.close();
+            System.out.println(obj.getId());
+        });
+       
     }
 
     @Test

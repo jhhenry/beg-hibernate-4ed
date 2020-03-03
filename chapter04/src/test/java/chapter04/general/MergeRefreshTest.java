@@ -1,12 +1,14 @@
 package chapter04.general;
 
-import chapter04.model.SimpleObject;
-import com.autumncode.hibernate.util.SessionUtil;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.testng.Assert.assertEquals;
+import com.autumncode.hibernate.util.SessionUtil;
+
+import chapter04.model.SimpleObject;
 
 public class MergeRefreshTest {
     @Test

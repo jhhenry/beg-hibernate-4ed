@@ -1,10 +1,11 @@
 package chapter06.primarykey;
 
-import com.autumncode.hibernate.util.SessionUtil;
-import org.hibernate.Session;
-import org.testng.annotations.Test;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import static org.testng.Assert.assertNotNull;
+import org.hibernate.Session;
+import org.junit.jupiter.api.Test;
+
+import com.autumncode.hibernate.util.SessionUtil;
 
 public class BookTest {
     @Test

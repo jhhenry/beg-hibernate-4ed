@@ -1,12 +1,18 @@
 package chapter04.general;
 
-import chapter04.model.SimpleObject;
-import com.autumncode.hibernate.util.SessionUtil;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.testng.Assert.*;
+import com.autumncode.hibernate.util.SessionUtil;
+
+import chapter04.model.SimpleObject;
 
 public class PersistingEntitiesTest {
     @Test
@@ -103,8 +109,10 @@ public class PersistingEntitiesTest {
             assertNotNull(obj.getId());
 
             id = obj.getId();
-
+           
             tx.commit();
+            //obj.setValue(15L);
+            
         }
 
         try (Session session = SessionUtil.getSession()) {

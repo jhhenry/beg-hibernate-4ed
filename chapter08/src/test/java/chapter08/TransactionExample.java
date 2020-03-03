@@ -1,20 +1,22 @@
 package chapter08;
 
-import chapter08.model.Publisher;
-import com.autumncode.hibernate.util.SessionUtil;
-import org.hibernate.*;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.query.Query;
-import org.testng.annotations.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static org.testng.Assert.assertEquals;
+import org.hibernate.HibernateException;
+import org.hibernate.PessimisticLockException;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.junit.jupiter.api.Test;
+
+import com.autumncode.hibernate.util.SessionUtil;
+
+import chapter08.model.Publisher;
 
 public class TransactionExample {
     // note lack of @Test annotation

@@ -1,11 +1,14 @@
 package chapter04.broken;
 
-import com.autumncode.hibernate.util.SessionUtil;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.testng.Assert.*;
+import com.autumncode.hibernate.util.SessionUtil;
 
 public class BrokenInversionTest {
 

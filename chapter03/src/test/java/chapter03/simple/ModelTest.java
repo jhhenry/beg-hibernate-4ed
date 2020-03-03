@@ -1,6 +1,6 @@
 package chapter03.simple;
 
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
 public class ModelTest {
     @Test

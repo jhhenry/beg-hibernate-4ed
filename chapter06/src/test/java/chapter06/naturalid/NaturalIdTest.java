@@ -1,20 +1,38 @@
 package chapter06.naturalid;
 
-import com.autumncode.hibernate.util.SessionUtil;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.fail;
+
+import java.util.Objects;
+
 import org.hibernate.ObjectNotFoundException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.testng.Assert.*;
+import com.autumncode.hibernate.util.SessionUtil;
 
 public class NaturalIdTest {
+	
+	@Test
+	public void testHashCodeAndClone()
+	{
+		SimpleNaturalIdEmployee e1 = newSimpleEmployee("Tom", 5431);
+		SimpleNaturalIdEmployee e2 = newSimpleEmployee("Tom", 5431);
+		assertEquals(e1, e2);
+		assertEquals(e1.hashCode(), e2.hashCode());
+		assertNotEquals(Objects.hashCode(e1), Objects.hash(e2));
+		
+	}
     @Test
     public void testSimpleNaturalId() {
         Integer id = createSimpleEmployee("Sorhed", 5401).getId();
 
         try (Session session = SessionUtil.getSession()) {
-            Transaction tx = session.beginTransaction();
+            //Transaction tx = session.beginTransaction();
 
             SimpleNaturalIdEmployee employee =
                     session
@@ -27,7 +45,7 @@ public class NaturalIdTest {
                             .load(5401);
             assertEquals(badgedEmployee, employee);
 
-            tx.commit();
+           //tx.commit();
         }
     }
 
@@ -142,9 +160,7 @@ public class NaturalIdTest {
     }
 
     private SimpleNaturalIdEmployee createSimpleEmployee(String name, int badge) {
-        SimpleNaturalIdEmployee employee = new SimpleNaturalIdEmployee();
-        employee.setName(name);
-        employee.setBadge(badge);
+        SimpleNaturalIdEmployee employee = newSimpleEmployee(name, badge);
 
         try (Session session = SessionUtil.getSession()) {
             Transaction tx = session.beginTransaction();
@@ -153,4 +169,11 @@ public class NaturalIdTest {
         }
         return employee;
     }
+    
+	private SimpleNaturalIdEmployee newSimpleEmployee(String name, int badge) {
+		SimpleNaturalIdEmployee employee = new SimpleNaturalIdEmployee();
+        employee.setName(name);
+        employee.setBadge(badge);
+		return employee;
+	}
 }

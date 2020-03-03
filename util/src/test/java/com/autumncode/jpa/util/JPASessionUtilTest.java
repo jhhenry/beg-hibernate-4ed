@@ -1,15 +1,19 @@
 package com.autumncode.jpa.util;
 
-import com.autumncode.util.model.Thing;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import org.testng.annotations.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 
-import static org.testng.Assert.*;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
+import org.junit.jupiter.api.Test;
+
+import com.autumncode.util.model.Thing;
 
 public class JPASessionUtilTest {
 @Test
@@ -18,10 +22,13 @@ public void getEntityManager() {
     em.close();
 }
 
-@Test(expectedExceptions = {javax.persistence.PersistenceException.class})
+@Test
 public void nonexistentEntityManagerName() {
-    JPASessionUtil.getEntityManager("nonexistent");
-    fail("We shouldn't be able to acquire an EntityManager here");
+	assertThrows(javax.persistence.PersistenceException.class, () -> {
+		JPASessionUtil.getEntityManager("nonexistent");
+		fail("We shouldn't be able to acquire an EntityManager here");
+	});
+    
 }
 
 @Test
@@ -30,10 +37,13 @@ public void getSession() {
     session.close();
 }
 
-@Test(expectedExceptions = {javax.persistence.PersistenceException.class})
+@Test
 public void nonexistentSessionName() {
-    JPASessionUtil.getSession("nonexistent");
-    fail("We shouldn't be able to acquire a Session here");
+	assertThrows(javax.persistence.PersistenceException.class, () -> {
+		JPASessionUtil.getSession("nonexistent");
+		fail("We shouldn't be able to acquire a Session here");
+	});
+    
 }
 
 @Test

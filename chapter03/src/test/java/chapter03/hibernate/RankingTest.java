@@ -1,5 +1,11 @@
 package chapter03.hibernate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.util.IntSummaryStatistics;
+import java.util.stream.Collectors;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -7,20 +13,14 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.query.Query;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
-
-import java.util.IntSummaryStatistics;
-import java.util.stream.Collectors;
-
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertNotNull;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class RankingTest {
     private SessionFactory factory;
 
-    @BeforeMethod
+    @BeforeEach
     public void setup() {
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
                 .configure()
@@ -28,7 +28,7 @@ public class RankingTest {
         factory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
 
-    @AfterMethod
+    @AfterEach
     public void shutdown() {
         factory.close();
     }

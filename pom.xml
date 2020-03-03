@@ -30,7 +30,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <testng.version>6.14.3</testng.version>
+        <junit.version>5.6.0</junit.version>
         <hibernate-core.version>5.2.17.Final</hibernate-core.version>
         <hibernate-validator.version>5.3.1.Final</hibernate-validator.version>
         <h2.version>1.4.197</h2.version>
@@ -43,9 +43,9 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>org.testng</groupId>
-                <artifactId>testng</artifactId>
-                <version>${testng.version}</version>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter</artifactId>
+                <version>${junit.version}</version>
                 <scope>test</scope>
             </dependency>
             <dependency>
@@ -133,8 +133,8 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

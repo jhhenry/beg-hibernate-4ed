@@ -1,23 +1,28 @@
 package chapter10;
 
-import chapter10.model.*;
-import com.autumncode.jpa.util.JPASessionUtil;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.List;
+import java.util.function.Consumer;
 
 import javax.persistence.EntityManager;
-import javax.persistence.NonUniqueResultException;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 import javax.persistence.metamodel.Metamodel;
-import java.util.List;
-import java.util.function.Consumer;
 
-import static org.testng.Assert.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import com.autumncode.jpa.util.JPASessionUtil;
+
+import chapter10.model.Product;
+import chapter10.model.Software;
+import chapter10.model.Supplier;
 
 public class QueryTest {
     private void doWithEntityManager(Consumer<EntityManager> command) {
@@ -35,7 +40,7 @@ public class QueryTest {
         em.close();
     }
 
-    @BeforeMethod
+    @BeforeEach
     public void populateData() {
         doWithEntityManager((em) -> {
             Supplier supplier = new Supplier("Hardware, Inc.");
@@ -61,7 +66,7 @@ public class QueryTest {
         });
     }
 
-    @AfterMethod
+    @AfterEach
     public void cleanup() {
         doWithEntityManager((em) -> {
             em.createQuery("delete from Software").executeUpdate();
@@ -430,7 +435,7 @@ public class QueryTest {
         });
     }
 
-    @Test(expectedExceptions = NonUniqueResultException.class)
+    @Test
     public void testUniqueResultWithException() {
         doWithEntityManager((em) -> {
             CriteriaBuilder builder = em.getCriteriaBuilder();

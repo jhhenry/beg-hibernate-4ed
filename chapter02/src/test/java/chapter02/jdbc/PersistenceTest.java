@@ -1,17 +1,20 @@
 package chapter02.jdbc;
 
-import chapter02.hibernate.Message;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.testng.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
+
+import chapter02.hibernate.Message;
 
 public class PersistenceTest {
-    @BeforeSuite
     public void setup() {
         try (Connection connection = DriverManager.getConnection("jdbc:h2:./db2", "sa", "")) {
             // clear out the old data, if any, so we know the state of the DB
@@ -47,7 +50,7 @@ public class PersistenceTest {
         }
     }
 
-    @Test(dependsOnMethods = "saveMessage")
+    @Test
     public void readMessage() {
         List<Message> list = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection("jdbc:h2:./db2", "sa", "")) {
